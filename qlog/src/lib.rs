@@ -134,7 +134,7 @@
 //! let event_data =
 //!     qlog::events::EventData::PacketSent(qlog::events::quic::PacketSent {
 //!         header: pkt_hdr,
-//!         frames: Some(frames),
+//!         frames: Some(frames.into()),
 //!         is_coalesced: None,
 //!         retry_token: None,
 //!         stateless_reset_token: None,
@@ -338,7 +338,7 @@
 //! let event_data =
 //!     qlog::events::EventData::PacketSent(qlog::events::quic::PacketSent {
 //!         header: pkt_hdr,
-//!         frames: Some(vec![ping, padding]),
+//!         frames: Some(vec![ping, padding].into()),
 //!         is_coalesced: None,
 //!         retry_token: None,
 //!         stateless_reset_token: None,
@@ -432,7 +432,7 @@ pub enum Error {
 
 impl std::fmt::Display for Error {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{:?}", self)
+        write!(f, "{self:?}")
     }
 }
 
@@ -650,7 +650,7 @@ impl<'a> HexSlice<'a> {
 impl<'a> std::fmt::Display for HexSlice<'a> {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         for byte in self.0 {
-            write!(f, "{:02x}", byte)?;
+            write!(f, "{byte:02x}")?;
         }
         Ok(())
     }
@@ -822,7 +822,7 @@ mod tests {
 
         let ev_data = EventData::PacketSent(PacketSent {
             header: pkt_hdr,
-            frames: Some(frames),
+            frames: Some(frames.into()),
             is_coalesced: None,
             retry_token: None,
             stateless_reset_token: None,
@@ -942,7 +942,7 @@ mod tests {
         }];
         let event_data = EventData::PacketSent(PacketSent {
             header: pkt_hdr,
-            frames: Some(frames),
+            frames: Some(frames.into()),
             is_coalesced: None,
             retry_token: None,
             stateless_reset_token: None,
